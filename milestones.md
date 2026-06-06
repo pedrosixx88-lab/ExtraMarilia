@@ -12,7 +12,7 @@
 
 ---
 
-## M1 — Anonymous Request Form [ ]
+## M1 — Anonymous Request Form [x]
 - `/solicitar` page: nome, WhatsApp, descrição, categoria, bairro, urgente checkbox
 - Zod + React Hook Form validation; Brazilian phone mask
 - `POST /api/requests` → inserts with `status='pending'`
