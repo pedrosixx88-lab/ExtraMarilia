@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand colors */
+    --brand-cream: #F5F0E8;
+    --brand-orange: #E8431A;
+    --brand-orange-dark: #C73515;
+    --brand-brown: #5C3D2E;
+    --brand-sand: #E8DCC8;
+
+    /* shadcn/ui tokens mapeados para o tema ExtraMarília */
+    --background: 40 43% 93%;       /* #F5F0E8 cream */
+    --foreground: 20 40% 18%;       /* marrom escuro */
+
+    --card: 40 50% 97%;
+    --card-foreground: 20 40% 18%;
+
+    --popover: 40 50% 97%;
+    --popover-foreground: 20 40% 18%;
+
+    --primary: 14 81% 51%;          /* #E8431A laranja */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 38 40% 88%;        /* areia */
+    --secondary-foreground: 20 40% 18%;
+
+    --muted: 38 30% 88%;
+    --muted-foreground: 20 20% 45%;
+
+    --accent: 14 81% 51%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 38 25% 82%;
+    --input: 38 25% 82%;
+    --ring: 14 81% 51%;
+
+    --radius: 0.625rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
