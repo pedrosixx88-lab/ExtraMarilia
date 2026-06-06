@@ -23,7 +23,7 @@
 
 ---
 
-## M2 — Public Feed + Realtime [ ]
+## M2 — Public Feed + Realtime [x]
 - `/feed` page: approved requests as cards with category icon, bairro, urgente badge, wa.me CTA
 - FeedFilters: category chips + bairro dropdown; URL-synced (`?categoria=&bairro=`)
 - `useRealtimeFeed` hook: new approved requests appear without page refresh
