@@ -1,6 +1,6 @@
 # ExtraMarília — Milestones
 
-## M0 — Project Scaffolding [ ]
+## M0 — Project Scaffolding [x]
 - Initialize Next.js 14 + TypeScript + Tailwind + shadcn/ui
 - Configure brand theme (#F5F0E8, #E8431A, Syne + DM Sans)
 - Supabase project + local dev (`supabase start`)
