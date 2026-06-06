@@ -1,0 +1,85 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Analise o arquivo que acabou de ser gravado. Verifique o campo tool_input.file_path ou tool_input.path em $ARGUMENTS para saber o caminho. Se o arquivo for relacionado ao Supabase (contém 'supabase' no caminho, termina em .sql, ou é um arquivo client/server do Supabase em lib/supabase/), aplique as seguintes verificacoes de seguranca e best practices:\n\n1. TABELAS SEM RLS: Toda nova tabela criada com CREATE TABLE deve ter 'ALTER TABLE ... ENABLE ROW LEVEL SECURITY' logo abaixo. Se faltar, bloqueie.\n2. TABELA SEM POLICIES: Se RLS foi habilitado mas nenhuma policy (CREATE POLICY) foi definida para a tabela, a tabela fica completamente inacessivel. Verifique se ha policies para SELECT, INSERT, UPDATE, DELETE conforme necessario.\n3. SERVICE ROLE KEY NO CLIENTE: Se o arquivo for um componente React (.tsx) ou um hook client-side (contendo 'use client') e referenciar SUPABASE_SERVICE_ROLE_KEY ou usar createClient com a service role key, bloqueie imediatamente.\n4. ANON KEY PARA OPERACOES ADMIN: Se um arquivo de API route (route.ts) usar o client anonimo (createBrowserClient ou NEXT_PUBLIC_SUPABASE_ANON_KEY) para operacoes de admin (aprovar pedidos, alterar highlighted, etc), bloqueie.\n5. REALTIME SEM FILTRO: Se houver subscription do Supabase Realtime sem filter (ex: .on('postgres_changes', {event:'*', schema:'public', table:'requests'}) sem filter), alerte que isso pode expor dados pending.\n6. STORAGE SEM POLICY: Se criar um bucket no Supabase Storage sem definir policies de acesso, alerte.\n\nSe encontrar qualquer um desses problemas, retorne decision:block com explicacao clara em portugues do problema e como corrigir. Se o arquivo nao for relacionado ao Supabase, apenas aprove sem comentarios.",
+            "continueOnBlock": true,
+            "statusMessage": "Verificando Supabase best practices...",
+            "timeout": 45
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(npm install*)",
+            "command": "Set-Location 'c:\\Users\\User\\ExtraMarilia'; npm audit --audit-level=moderate 2>&1; exit 0",
+            "shell": "powershell",
+            "statusMessage": "Auditando vulnerabilidades nas dependencias...",
+            "timeout": 60,
+            "async": true
+          },
+          {
+            "type": "command",
+            "if": "Bash(npm i *)",
+            "command": "Set-Location 'c:\\Users\\User\\ExtraMarilia'; npm audit --audit-level=moderate 2>&1; exit 0",
+            "shell": "powershell",
+            "statusMessage": "Auditando vulnerabilidades nas dependencias...",
+            "timeout": 60,
+            "async": true
+          },
+          {
+            "type": "command",
+            "if": "Bash(supabase db push*)",
+            "command": "Write-Output '{\"systemMessage\": \"SEGURANCA: Verifique as RLS policies antes de continuar. Use: supabase db diff\"}'",
+            "shell": "powershell",
+            "statusMessage": "Verificando seguranca Supabase..."
+          },
+          {
+            "type": "command",
+            "if": "Bash(supabase push*)",
+            "command": "Write-Output '{\"systemMessage\": \"SEGURANCA: Verifique as RLS policies antes de continuar. Use: supabase db diff\"}'",
+            "shell": "powershell",
+            "statusMessage": "Verificando seguranca Supabase..."
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(npm i *)",
+      "Bash(npm audit *)",
+      "Bash(npm uninstall *)",
+      "Bash(npx *)",
+      "Bash(supabase *)",
+      "Bash(git init)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git checkout *)",
+      "Bash(git checkout -b *)",
+      "Bash(git branch *)",
+      "Bash(git push *)",
+      "Bash(git pull *)",
+      "Bash(git merge *)",
+      "Bash(git fetch *)",
+      "Bash(gh pr *)",
+      "Bash(gh repo *)",
+      "Bash(gh auth *)",
+      "Bash(node *)",
+      "Bash(eslint *)",
+      "Bash(tsc *)"
+    ]
+  }
+}
